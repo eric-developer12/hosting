@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Image Gallery</title>
+   <style>
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 16px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.05);
+}
+
+/* Lightbox Styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+}
+
+.lightbox-content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+}
+
+#lightbox-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ff5c5c;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+   </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Image Gallery</h1>
+    </header>
+
+    <div class="gallery">
+        <!-- Image grid -->
+        <div class="gallery-item" onclick="openLightbox();currentSlide(1)">
+            <img src="../Downloads/d.jpg" alt="Image 1">
+        </div>
+        <div class="gallery-item" onclick="openLightbox();currentSlide(2)">
+            <img src="../Downloads/d.jpg" alt="Image 2">
+        </div>
+        <div class="gallery-item" onclick="openLightbox();currentSlide(3)">
+            <img src="../Downloads/d.jpg" alt="Image 3">
+        </div>
+        <div class="gallery-item" onclick="openLightbox();currentSlide(4)">
+            <img src="../Downloads/d.jpg" alt="Image 4">
+        </div>
+        <!-- Add more items as needed -->
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="">
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+<script>
+    let slideIndex = 1;
+
+function openLightbox() {
+    document.getElementById('lightbox').style.display = "block";
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').style.display = "none";
+}
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+function showSlides(n) {
+    let slides = document.getElementsByClassName("gallery-item");
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+
+    let lightboxImage = document.getElementById("lightbox-image");
+    lightboxImage.src = slides[slideIndex - 1].getElementsByTagName("img")[0].src;
+}
+
+</script>
+
+</body>
+</html>
